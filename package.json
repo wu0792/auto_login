@@ -1,0 +1,26 @@
+{
+  "name": "auto_login",
+  "version": "1.0.0",
+  "description": "auto login the xx url",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wu0792/auto_login.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wu0792/auto_login/issues"
+  },
+  "homepage": "https://github.com/wu0792/auto_login#readme",
+  "dependencies": {
+    "expect-puppeteer": "^3.2.0",
+    "puppeteer": "1.6.0",
+    "shortid": "^2.2.13"
+  },
+  "devDependencies": {}
+}
