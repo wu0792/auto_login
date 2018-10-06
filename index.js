@@ -1,13 +1,20 @@
 const puppeteer = require('puppeteer');
 const expect = require('expect-puppeteer');
-const TIME_OUT = 60000;
+const TIME_OUT = 600000;
 const cp = require('child_process');
 const shortid = require('shortid');
 const path = require('path');
 const fs = require('fs');
 const moment = require('moment');
+const commandLineArgs = require('command-line-args');
 
 (async () => {
+    const optionDefinitions = [
+        { name: 'headless', type: Number, defaultValue: 1 }
+    ]
+
+    const options = commandLineArgs(optionDefinitions)
+
     const logFileName = `${moment().format('YYYY-MM-DD_HHmmss')}.log`
     const log = (msg) => {
         const logFileFullDir = path.join(process.cwd(), `log`)
@@ -23,8 +30,10 @@ const moment = require('moment');
         stream.end()
     }
 
+    log(`start with headless:${options.headless}`)
+
     let browser = await puppeteer.launch({
-        headless: true,
+        headless: !!options.headless,
         slowMo: 25,
         args: [
             '--disable-infobars',
@@ -35,7 +44,7 @@ const moment = require('moment');
     const page = await browser.newPage()
     await page._client.send('Emulation.clearDeviceMetricsOverride');
 
-    await page.goto('https://www.xiaoyayun.com/', { timeout: 60000 })
+    await page.goto('https://www.xiaoyayun.com/', { timeout: 600000 })
     const loginButtonSelector = '.deanunlogin a.deandlu'
     await expect(page).toMatchElement(loginButtonSelector, { timeout: TIME_OUT })
     await expect(page).toClick(loginButtonSelector, { timeout: TIME_OUT })
@@ -48,12 +57,12 @@ const moment = require('moment');
     const uidInputSelector = 'form[name="login"] input[name="username"]'
     await expect(page).toMatchElement(uidInputSelector, { timeout: TIME_OUT })
     await page.focus(uidInputSelector)
-    await page.type(uidInputSelector, '')       //uid
+    await page.type(uidInputSelector, 'abc@163.com')       //uid
 
     const pwdInputSelector = 'form[name="login"] input[name="password"]'
     await expect(page).toMatchElement(pwdInputSelector, { timeout: TIME_OUT })
     await page.focus(pwdInputSelector)
-    await page.type(pwdInputSelector, '')       //pwd
+    await page.type(pwdInputSelector, 'abc')       //pwd
 
     let code = ''
     let tryDetectTimes = 0
