@@ -24,7 +24,7 @@ const moment = require('moment');
     }
 
     let browser = await puppeteer.launch({
-        headless: false,
+        headless: true,
         slowMo: 25,
         args: [
             '--disable-infobars',
@@ -48,12 +48,12 @@ const moment = require('moment');
     const uidInputSelector = 'form[name="login"] input[name="username"]'
     await expect(page).toMatchElement(uidInputSelector, { timeout: TIME_OUT })
     await page.focus(uidInputSelector)
-    await page.type(uidInputSelector, '')
+    await page.type(uidInputSelector, '')       //uid
 
     const pwdInputSelector = 'form[name="login"] input[name="password"]'
     await expect(page).toMatchElement(pwdInputSelector, { timeout: TIME_OUT })
     await page.focus(pwdInputSelector)
-    await page.type(pwdInputSelector, '')
+    await page.type(pwdInputSelector, '')       //pwd
 
     let code = ''
     let tryDetectTimes = 0
