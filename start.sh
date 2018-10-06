@@ -1,3 +1,3 @@
 echo "start"
-node ../index.js --headless 0
+node ./index.js --headless 0
 echo "ok"
